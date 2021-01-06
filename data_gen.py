@@ -4,15 +4,16 @@ import numpy as np
 import torch
 import argparse
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_bvalue', type=int, default=4)
     parser.add_argument('--SNR', type=int, default=100)
+    parser.add_argument('--data_path', type=str, default='/mnt/data003/wonil/IVIM_github/')
 
     args = parser.parse_args()
-    path = '/mnt/data003/wonil/IVIM/data/'
+    path = args.data_path
 
+    print('data_path:'+path)
     print('number of bvalue: '+str(args.num_bvalue))
     print('SNR: '+str(args.SNR))
 
@@ -24,8 +25,9 @@ if __name__ == '__main__':
     Dpmin=0;    Dpmax=20e-3
     S0min=200;    S0max=1700
     S0=300
-    noise_std=S0/args.SNR
-    num_bvalue=args.num_bvalue
+
+    noise_std = S0/args.SNR
+    num_bvalue = args.num_bvalue
 
     data_save_path = path+'bvalue_'+str(num_bvalue)+'_SNR_'+str(args.SNR)+'/'
 
@@ -59,16 +61,18 @@ if __name__ == '__main__':
         Fp_validation[i] = np.random.uniform(0, 1) * (fmax - fmin) + fmin
         S0_validation[i] = np.random.uniform(0, 1) * (S0max - S0min) + S0min
 
-    noise_train_real = torch.normal(torch.tensor(np.zeros((num_samples, num_bvalue))), std=noise_std).float()#.cuda()
-    noise_train_imag = torch.normal(torch.tensor(np.zeros((num_samples, num_bvalue))), std=noise_std).float()#.cuda()
+    noise_train_real = torch.normal(torch.tensor(np.zeros((num_samples, num_bvalue))), std=noise_std).float()
+    noise_train_imag = torch.normal(torch.tensor(np.zeros((num_samples, num_bvalue))), std=noise_std).float()
 
-    noise_validation_real = torch.normal(torch.tensor(np.zeros((num_samples_val, num_bvalue))), std=noise_std).float()#.cuda()
-    noise_validation_imag = torch.normal(torch.tensor(np.zeros((num_samples_val, num_bvalue))), std=noise_std).float()#.cuda()
+    noise_validation_real = torch.normal(torch.tensor(np.zeros((num_samples_val, num_bvalue))), std=noise_std).float()
+    noise_validation_imag = torch.normal(torch.tensor(np.zeros((num_samples_val, num_bvalue))), std=noise_std).float()
 
     inputdata = np.transpose(np.concatenate(([Fp_train], [Dt_train], [Dp_train], [S0_train]), axis=0))
     inputdata_val = np.transpose(
     np.concatenate(([Fp_validation], [Dt_validation], [Dp_validation], [S0_validation]), axis=0))
 
+
+    ##Save noise & IVIM parameters
     torch.save(noise_train_real,data_save_path+'noise_train_real.pth')
     torch.save(noise_train_imag,data_save_path+'noise_train_imag.pth')
 
