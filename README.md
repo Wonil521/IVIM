@@ -11,8 +11,9 @@ For optimizing b-values & training deep neural network, \
 For testing the trained deep neural network & optimized b-values\
 <code> python test.py --test_num_bvalue [number of b-values] --SNR [target SNR] --test_trials [number of trials] --gpu [gpu number] --lambda1 [lambda1, weighting of f] --lambda2 [lambda2, wieghting of D] --lambda3 [lambda3, weighting of Dp] --data_path [data_path] </code>\
 \
-The default setting: number of b-values = 4, SNR=100, data path = 'home/user/', number of trials for training = 20, number of trials for test = 50, gpu = 0, lambda1 = 1.0, lambda2 = 1.0, lambda3 = 1.0.
+The default setting: number of b-values = 4, SNR=100, data path = 'home/user/', number of trials for training = 20, number of trials for test = 50, gpu = 0, lambda1 = 1.0, lambda2 = 1.0, lambda3 = 1.0. </code>
 
 # Optimized b-values
-The 
+An example of optimized b-values (n=4 & SNR=100).
+
 ![github](https://user-images.githubusercontent.com/59683100/103767261-ab3fc680-5063-11eb-83c9-e601e15ea3d1.png)
